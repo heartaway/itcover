@@ -1,0 +1,45 @@
+<project xmlns:ns0="antlib:org.jacoco.ant" default="report" name="JacocoReport">
+
+    <description>
+        &#29983;&#25104;&#35206;&#30422;&#29575;&#25253;&#21578;
+    </description>
+
+    
+    
+    <property file="${user.dir}/config" />
+    
+    <property name="appServerHost" value="${target.server.host}" />
+    <property name="appServerSamplePort" value="${target.server.coveragent.port}" />
+    
+
+    <property location="report" name="result.report.dir" />
+    <property location="${result.report.dir}/jacoco.exec" name="result.exec.file" />
+
+    <taskdef resource="org/jacoco/ant/antlib.xml" uri="antlib:org.jacoco.ant">
+        <classpath path="lib/jacocoant.jar" />
+    </taskdef>
+
+    
+    <target name="clean">
+        <delete includeEmptyDirs="true">
+            <fileset dir="${result.report.dir}" includes="**/*" />
+        </delete>
+    </target>
+
+    
+    <target depends="clean" name="report">
+        <ns0:dump address="${appServerHost}" append="true" destfile="${result.exec.file}" port="${appServerSamplePort}" reset="true" />
+        <ns0:report>
+            <executiondata>
+                <file file="${result.exec.file}" />
+            </executiondata>
+            
+            <structure name="root">
+            <group name="aliyun_qa_portal"><classfiles><fileset dir="${aliyun_qa_portal}/target/classes"><include name="com/aliyun/qa/portal/service/impl/**/*.class" /><include name="com/aliyun/qa/portal/dao/impl/**/*.class" /></fileset></classfiles><sourcefiles><fileset dir="${aliyun_qa_portal}/src/main/java" /></sourcefiles></group></structure>
+            
+            <html destdir="${result.report.dir}" />
+        </ns0:report>
+    </target>
+
+
+<property location="/m1/workspace/QAWork/itcover/codebase/aliyun_qa_portal" name="aliyun_qa_portal" /></project>

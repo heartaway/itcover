@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="JacocoReport" xmlns:jacoco="antlib:org.jacoco.ant" default="report">
+
+    <description>
+        生成覆盖率报告
+    </description>
+
+    <!-- =========================== 配置点1 开始 =========================== -->
+    <!-- 项目列表 -->
+    <property file="${user.dir}/config"/>
+    <!-- 应用服务器配置 -->
+    <property name="appServerHost" value="${target.server.host}"/>
+    <property name="appServerSamplePort" value="${target.server.coveragent.port}"/>
+    <!-- =========================== 配置点1 结束 =========================== -->
+
+    <property name="result.report.dir" location="report"/>
+    <property name="result.exec.file" location="${result.report.dir}/jacoco.exec"/>
+
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath path="lib/jacocoant.jar"/>
+    </taskdef>
+
+    <!-- 清理 -->
+    <target name="clean">
+        <delete includeEmptyDirs="true">
+            <fileset dir="${result.report.dir}" includes="**/*"/>
+        </delete>
+    </target>
+
+    <!-- 生成报表 -->
+    <target name="report" depends="clean">
+        <jacoco:dump address="${appServerHost}" port="${appServerSamplePort}" reset="true"
+                     destfile="${result.exec.file}" append="true"/>
+        <jacoco:report>
+            <executiondata>
+                <file file="${result.exec.file}"/>
+            </executiondata>
+            <!-- =========================== 配置点2 开始 =========================== -->
+            <structure name="root">
+            </structure>
+            <!-- =========================== 配置点2 结束 =========================== -->
+            <html destdir="${result.report.dir}"/>
+        </jacoco:report>
+    </target>
+
+
+</project>
+

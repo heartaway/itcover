@@ -1,0 +1,7 @@
+[targetServerInfo]
+target.server.host=127.0.0.1
+target.server.coveragent.port=6745
+target.app.sourcecode.svn.path=http://svn.alibaba-inc.com/repos/ali_yun/qa/test_prj/aliyun_qa_portal
+target.app.sourcecode.svn.account=xikai.maoxk
+target.app.sourcecode.svn.password=*****
+target.app.sourcecode.package.pattern=com.aliyun.qa.portal.service.impl,com.aliyun.qa.portal.dao.impl
