@@ -22,3 +22,22 @@ itcover是一款用于统计集成测试对应用代码覆盖率并生成报告�
 
 4. 查看报表，进入到itcover/report目录下，用浏览器打开index.html。
 
+代码覆盖率 与 Sonar的集成：
+1. 项目POM中添加插件
+<plugin>
+<groupId>org.codehaus.mojo</groupId>
+<artifactId>sonar-maven-plugin</artifactId>
+ <version>2.0</version>
+</plugin>
+2. 使用Jenkins的Sonar插件方式：
+在Job的配置的sonar选项汇中找到Additional properties选项，添加
+-Dsonar.jacoco.itReportPath="/home/a/project/output/jacoco.exec" 
+值为执行测试本地测试覆盖率输出的目录路径。
+或者直接在 构建命令中添加覆盖率配置路径：
+mvn clean install -Ptest sonar:sonar -Dmaven.test.failure.ignore=true 
+-Dsonar.jdbc.url=jdbc:h2:tcp://http://*.*.*.*:9092/sonar 
+-Dsonar.host.url=http://*.*.8.*::9000 -Dsonar.jacoco.itReportPath="/home/a/project/output/jacoco.exec" 
+-Dsonar.dynamicAnalysis
+
+
+
